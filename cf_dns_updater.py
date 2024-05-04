@@ -22,7 +22,7 @@ def is_valid_ipv4(ip):
     return bool(pattern.match(ip))
 
 def get_previously_selected_ips(): #获取上一次优选的ip
-    with open(".\\config\\config.json","r",encoding="utf-8") as config:
+    with open("./config/config.json","r",encoding="utf-8") as config:
         domains = json.load(config).get("domains")
         ip_list=[]
         for key in domains:
@@ -34,7 +34,7 @@ def get_previously_selected_ips(): #获取上一次优选的ip
     
 #获取固定ip,可根据喜好添加
 def get_fixed_ips():
-    with open (".\\config\\fixed_ips.txt","r",encoding="utf-8") as file:
+    with open ("./config/fixed_ips.txt","r",encoding="utf-8") as file:
         ip_list= [ip.strip() for ip in file.readlines()]
         ip_list=filter(is_valid_ipv4,ip_list)
         return list(ip_list)
@@ -92,7 +92,7 @@ def fetch_ips(): #下载并生成3ip.txt文件
 # Part3.生成result.csv
 def run_cloudflare_speedtest():
     print("测速并生成result.csv...")
-    with open('.\\config\\cmd.txt', 'r') as file:
+    with open('./config/cmd.txt', 'r') as file:
         cmd = file.readline().strip().split()
     cmd.extend(['-p', '0'])
     subprocess.run(cmd)
@@ -111,7 +111,7 @@ def get_ips():  # 读取result.csv文件中的IPs
 
 # Part4.更新Cloudflare DNS记录
 def load_config(): # 读取config.json文件
-    with open("config\\config.json", "r", encoding="utf-8") as file:
+    with open("config/config.json", "r", encoding="utf-8") as file:
         config = json.load(file)
         email = config.get("email")
         global_api_key = config.get("global_api_key")
